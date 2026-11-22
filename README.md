@@ -1,75 +1,85 @@
 # Paradox Alloy
 
-Cross-platform, adversary-emulation focused C2 framework with strong implant generation and operator experience.
+Cross-platform C2 framework (Sliver) with strong implant generation and operator UX.
 
-Paradox terminal-centric notes for Sliver.
+Paradox operator kit — terminal & Termux focused.
 
 **Upstream:** [BishopFox/sliver](https://github.com/BishopFox/sliver)
 
 ---
 
-## Strengths
+## Files in this repo
 
-- Single binary server + client
-- Excellent implant generation (Windows, Linux, macOS, and more)
-- mTLS, WireGuard, HTTP(S), DNS C2
-- Built-in armory of tools
-- Good for both red team and research
+| File | Purpose |
+|------|---------|
+| `install-linux.sh` | Linux installer (tries official script, falls back to go install) |
+| `install-termux.sh` | Termux installer |
+| `start-server.sh` | Launch sliver-server |
+| `start-client.sh` | Launch sliver client |
+| `README.md` | This file |
 
 ---
 
-## Install
+## Quick Start
 
-### Linux / macOS
+### Linux
 
 ```bash
-curl https://sliver.sh/install | sudo bash
-# or
-go install github.com/BishopFox/sliver@latest
+git clone https://github.com/Paradoxdreamer/paradox-alloy.git
+cd paradox-alloy
+chmod +x *.sh
+./install-linux.sh
+```
+
+Then:
+
+```bash
+./start-server.sh          # terminal 1
+./start-client.sh          # terminal 2
 ```
 
 ### Termux
 
 ```bash
-pkg install golang git
-go install github.com/BishopFox/sliver@latest
-# binary lands in ~/go/bin
-export PATH=$PATH:~/go/bin
-sliver-server
+git clone https://github.com/Paradoxdreamer/paradox-alloy.git
+cd paradox-alloy
+chmod +x install-termux.sh start-server.sh start-client.sh
+./install-termux.sh
+source ~/.bashrc
+./start-server.sh
 ```
-
-Works surprisingly well on Termux for the server side.
-
-### Windows
-
-Download prebuilt releases from the official repo or build with Go.
 
 ---
 
-## Quick Operator Flow
+## Common Operator Commands
 
 ```bash
-sliver-server          # start the multiplayer server
-sliver                 # connect client
-
 # Generate implant
 generate --mtls your.domain.com --os windows --arch amd64 --save .
 
-# Start listener
+# Start mTLS listener
 mtls --lhost 0.0.0.0 --lport 443
+
+# Other profiles: http, https, wg, dns
 ```
 
 ---
 
-## Paradox Collection so far
+## Notes
 
-| Name              | Role                          | Repo |
-|-------------------|-------------------------------|------|
-| Paradox Sovereign | Full featured C2 (Havoc)     | [paradox-sovereign](https://github.com/Paradoxdreamer/paradox-sovereign) |
-| Paradox Alloy     | Cross-platform C2 (Sliver)   | this |
-| Paradox Oracle    | AD attack path mapping       | [paradox-oracle](https://github.com/Paradoxdreamer/paradox-oracle) |
-| Paradox Phantom   | Phishing / session capture   | [paradox-phantom](https://github.com/Paradoxdreamer/paradox-phantom) |
+- Works very well on Termux for the server side
+- Client is also usable on Termux
+- Prefer official `sliver.sh/install` on full Linux when possible
 
-More will be added.
+Use only with proper authorization.
 
-Operate only with proper authorization.
+---
+
+## Paradox Collection
+
+- Paradox Sovereign → Havoc
+- **Paradox Alloy** → Spiver (this)
+- Paradox Oracle → BloodHound
+- Paradox Phantom → Evilginx
+- Paradox Packet → Impacket
+- + more
